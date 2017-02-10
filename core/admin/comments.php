@@ -21,7 +21,7 @@ $plxAdmin->checkProfil(PROFIL_ADMIN, PROFIL_MANAGER, PROFIL_MODERATOR);
 # validation de l'id de l'article si passé en paramètre
 if(isset($_GET['a']) AND !preg_match('/^_?[0-9]{4}$/',$_GET['a'])) {
 	plxMsg::Error(L_ERR_UNKNOWN_ARTICLE); # Article inexistant
-	header('Location: index.php');
+	header('Location: articles.php');
 	exit;
 }
 
@@ -49,7 +49,7 @@ if(!empty($_GET['a'])) {
 	# Infos sur notre article
 	if(!$globArt = $plxAdmin->plxGlob_arts->query('/^'.$_GET['a'].'.(.*).xml$/','','sort',0,1)) {
 		plxMsg::Error(L_ERR_UNKNOWN_ARTICLE); # Article inexistant
-		header('Location: index.php');
+		header('Location: articles.php');
 		exit;
 	}
 	# Infos sur l'article

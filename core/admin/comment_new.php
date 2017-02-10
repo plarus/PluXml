@@ -20,7 +20,7 @@ $plxAdmin->checkProfil(PROFIL_ADMIN, PROFIL_MANAGER, PROFIL_MODERATOR);
 
 # Interdire de l'accès à la page si les commentaires sont désactivés
 if(!$plxAdmin->aConf['allow_com']) {
-	header('Location: index.php');
+	header('Location: articles.php');
 	exit;
 }
 
@@ -28,7 +28,7 @@ if(!$plxAdmin->aConf['allow_com']) {
 if(isset($_GET['a'])) {
 	if(!preg_match('/^_?([0-9]{4})$/',$_GET['a'], $capture)) {
 		plxMsg::Error(L_ERR_UNKNOWN_ARTICLE);
-		header('Location: index.php');
+		header('Location: articles.php');
 		exit;
 	} else {
 		$artId = $capture[1];
@@ -38,7 +38,7 @@ if(isset($_GET['a'])) {
 if(isset($_GET['c'])) {
 	if(!preg_match('/^_?([0-9]{4}).(.*)$/',$_GET['c'], $capture)) {
 		plxMsg::Error(L_ERR_UNKNOWN_ARTICLE);
-		header('Location: index.php');
+		header('Location: articles.php');
 		exit;
 	} else {
 		$artId = $capture[1];
@@ -64,7 +64,7 @@ if(!empty($_GET['c'])) { # Mode "answer"
 	# On va rechercher notre article
 	if(($aFile = $plxAdmin->plxGlob_arts->query('/^'.$artId.'.(.+).xml$/','','sort',0,1)) == false) { # Article inexistant
 		plxMsg::Error(L_ERR_COMMENT_UNKNOWN_ARTICLE);
-		header('Location: index.php');
+		header('Location: articles.php');
 		exit;
 	}
 	# Variables de traitement
@@ -88,7 +88,7 @@ if(!empty($_GET['c'])) { # Mode "answer"
 	# On check l'article si il existe bien
 	if(($aFile = $plxAdmin->plxGlob_arts->query('/^'.$_GET['a'].'.(.+).xml$/','','sort',0,1)) == false) {
 		plxMsg::Error(L_ERR_COMMENT_UNEXISTENT_ARTICLE);
-		header('Location: index.php');
+		header('Location: articles.php');
 		exit;
 	}
 	# Variables de traitement
@@ -104,7 +104,7 @@ if(!empty($_GET['c'])) { # Mode "answer"
 	# Ok, on récupère les commentaires de l'article
 	$plxAdmin->getCommentaires('/^'.str_replace('_','',$artId).'.(.*).xml$/','sort');
 } else { # Mode inconnu
-	header('Location: .index.php');
+	header('Location: .articles.php');
 	exit;
 }
 

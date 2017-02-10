@@ -20,14 +20,14 @@ $plxAdmin->checkProfil(PROFIL_ADMIN, PROFIL_MANAGER, PROFIL_MODERATOR);
 
 # Interdire de l'accès à la page si les commentaires sont désactivés
 if(!$plxAdmin->aConf['allow_com']) {
-    header('Location: index.php');
+    header('Location: articles.php');
     exit;
 }
 
 # validation de l'id de l'article si passé en paramètre
 if(isset($_GET['a']) AND !preg_match('/^_?[0-9]{4}$/',$_GET['a'])) {
 	plxMsg::Error(L_ERR_UNKNOWN_ARTICLE); # Article inexistant
-	header('Location: index.php');
+	header('Location: articles.php');
 	exit;
 }
 
@@ -91,7 +91,7 @@ if(($aFile = $plxAdmin->plxGlob_arts->query('/^'.$artId.'.(.+).xml$/','','sort',
 } else {
 	$result = $plxAdmin->parseArticle(PLX_ROOT.$plxAdmin->aConf['racine_articles'].$aFile['0']);
 	# On génère notre lien
-	$article = '<a href="'.$plxAdmin->aConf['racine'].'index.php?article'.intval($result['numero']).'/'.$result['url'].'" title="'.L_COMMENT_ARTICLE_LINKED_TITLE.'">';
+	$article = '<a href="'.$plxAdmin->aConf['racine'].'articles.php?article'.intval($result['numero']).'/'.$result['url'].'" title="'.L_COMMENT_ARTICLE_LINKED_TITLE.'">';
 	$article .= plxUtils::strCheck($result['title']);
 	$article .= '</a>';
 }
